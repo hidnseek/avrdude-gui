@@ -125,7 +125,11 @@ void Widget::do_cmd(const QString &path)
     if (!path.isEmpty()) {
         update = QString(" -U flash:w:\"%1\":i").arg(path);
     }
-    QString ret = QString("avrdude.exe -s -C avrdude.conf -c %1 -p %2 ")
+    QString ret = "avrdude";
+    #ifdef Q_OS_WIN32
+    ret += ".exe";
+    #endif
+    ret += QString(" -s -C avrdude.conf -c %1 -p %2 ")
             .arg(last_programmer, last_device)
             + fuses
             + update
